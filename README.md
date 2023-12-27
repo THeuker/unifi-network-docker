@@ -52,8 +52,8 @@ Each of the options is [described below.](#options-on-the-command-line)
 ```bash
 docker run -d --init \
    --restart=unless-stopped \
-   -p 8080:8080 -p 8443:8443 -p 3478:3478/udp \
-   -e TZ='Africa/Johannesburg' \
+   -p 8080:8080 -p 8443:8443 -p 3478:3478/udp -p 10001:10001/udp \
+   -e TZ='Europe/Amsterdam' \
    -v ~/unifi:/unifi \
    --user unifi \
    --name unifi \
@@ -106,7 +106,7 @@ The options for the `docker run...` command are:
 - `--restart=unless-stopped` - If the container should stop for some reason,
 restart it unless you issue a `docker stop ...`
 - `-p ...` - Set the ports to pass through to the container.
-`-p 8080:8080 -p 8443:8443 -p 3478:3478/udp`
+`-p 8080:8080 -p 8443:8443 -p 3478:3478/udp -p 10001:10001/udp`
 is the minimal set for a working Unifi Controller. 
 - `-e TZ=...` Set an environment variable named `TZ` with the desired time zone.
 Find your time zone in this 
@@ -237,7 +237,7 @@ Controller outputs logs to stdout in addition to server.log
 **Default: unset** 
 
 * `TZ`
-TimeZone. (i.e America/Chicago)
+TimeZone. (i.e Europe/Amsterdam)
 
 * `JVM_MAX_THREAD_STACK_SIZE`
 Used to set max thread stack size for the JVM
@@ -283,12 +283,13 @@ The Unifi-in-Docker container exposes the following ports.
 A minimal Unifi Controller installation requires you
 expose the first three with the `-p ...` option.
 
-* 8080/tcp - Device command/control 
-* 8443/tcp - Web interface + API 
-* 3478/udp - STUN service 
-* 8843/tcp - HTTPS portal _(optional)_
-* 8880/tcp - HTTP portal _(optional)_
-* 6789/tcp - Speed Test (unifi5 only) _(optional)_
+* 8080/tcp  -  Device command/control 
+* 8443/tcp  -  Web interface + API 
+* 3478/udp  -  STUN service 
+* 10001/udp -  Device discovery 
+* 8843/tcp  -  HTTPS portal _(optional)_
+* 8880/tcp  -  HTTP portal _(optional)_
+* 6789/tcp  -  Speed Test (unifi5 only) _(optional)_
 
 See [UniFi - Ports Used](https://help.ubnt.com/hc/en-us/articles/218506997-UniFi-Ports-Used) for more information.
 
